@@ -20,6 +20,7 @@ class GameAdapter(private val games: List<Game>) : RecyclerView.Adapter<GameAdap
         holder.gameTitle.text = game.name
         holder.gameRating.rating = game.rating
         holder.gameImage.setImageResource(game.imageResId)
+        holder.gameDesc.text = game.description
     }
 
     override fun getItemCount(): Int = games.size
@@ -28,5 +29,6 @@ class GameAdapter(private val games: List<Game>) : RecyclerView.Adapter<GameAdap
         val gameTitle: TextView = view.findViewById(R.id.gameTitle)
         val gameRating: RatingBar = view.findViewById(R.id.gameRating)
         val gameImage: ImageView = view.findViewById(R.id.gameImage)
+        val gameDesc: TextView = view.findViewById(R.id.gameDesc)
     }
 }

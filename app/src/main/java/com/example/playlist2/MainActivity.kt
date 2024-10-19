@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
     // Przykładowe dane dla Top 10
     private fun getTopTenGames(): List<Game> {
         return listOf(
-            Game("Red Dead Redemption 2", 4.5f, R.drawable.red_dead_redemption),
-            Game("Grand Theft Auto V", 4.5f, R.drawable.gta_v)
+            Game("Red Dead Redemption 2", 4.5f, R.drawable.red_dead_redemption,"An epic tale of life in America’s heartland."),
+            Game("Grand Theft Auto V", 4.5f, R.drawable.gta_v,"The biggest, most dynamic and most diverse open world ever created.")
             // Możesz dodać więcej gier według potrzeb
         )
     }
@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
     // Przykładowe dane dla najnowszych gier
     private fun getLatestGames(): List<Game> {
         return listOf(
-            Game("Silent Hill 2", 4.0f, R.drawable.silent_hill_2)
+            Game("Silent Hill 2", 4.0f, R.drawable.silent_hill_2, "A psychological horror game that redefined the genre.A psychological horror game that redefined the genre." +
+                    "A psychological horror game that redefined the genre.A psychological horror game that redefined the genre.")
             // Możesz dodać więcej gier według potrzeb
         )
     }
