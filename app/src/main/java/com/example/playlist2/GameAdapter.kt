@@ -7,17 +7,11 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.playlist2.Game
 import com.example.playlist2.R
 
-class GameAdapter(private val gameList: List<Game>) : RecyclerView.Adapter<GameAdapter.GameViewHolder>() {
-
-    inner class GameViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val gameImage: ImageView = view.findViewById(R.id.gameImage)
-        val gameTitle: TextView = view.findViewById(R.id.gameTitle)
-        val gameRating: RatingBar = view.findViewById(R.id.gameRating)
-        val ratingCount: TextView = view.findViewById(R.id.ratingCount)
-    }
+class GameAdapter(private val games: List<Game>) : RecyclerView.Adapter<GameAdapter.GameViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.top10, parent, false)
@@ -25,14 +19,27 @@ class GameAdapter(private val gameList: List<Game>) : RecyclerView.Adapter<GameA
     }
 
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-        val game = gameList[position]
-        holder.gameTitle.text = game.title
-        holder.gameRating.rating = game.rating
-        holder.gameImage.setImageResource(game.imageResId)
-
-
-        holder.ratingCount.text = (game.rating).toString()
+        val game = games[position]
+        holder.bind(game)
     }
 
-    override fun getItemCount() = gameList.size
+    override fun getItemCount(): Int = games.size
+
+    inner class GameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(game: Game) {
+            val title = itemView.findViewById<TextView>(R.id.gameTitle)
+            val coverImage = itemView.findViewById<ImageView>(R.id.gameImage)
+            val ratingBar = itemView.findViewById<RatingBar>(R.id.gameRating) // Użyj RatingBar, a nie TextView
+
+            title.text = game.title
+
+            // Ustawienie oceny do RatingBar
+            ratingBar.rating = game.rating.toFloat()  // RatingBar oczekuje wartości typu float
+
+            Glide.with(itemView.context)
+                .load(game.coverImageUrl)
+                .into(coverImage)
+        }
+    }
+
 }

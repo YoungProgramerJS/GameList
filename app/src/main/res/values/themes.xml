@@ -14,7 +14,20 @@
         <item name="android:color">@color/yellow</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/yellow</item>
+    </style>
+
     <style name="AppTheme.Fragment" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">#000000</item>
     </style>
+
+    <!-- Styl dla dialogu -->
+    <style name="CustomDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/black</item> <!-- Tło dialogu -->
+        <item name="android:textColorPrimary">@android:color/white</item> <!-- Kolor tekstu -->
+        <item name="android:textColorSecondary">@android:color/white</item> <!-- Kolor tekstu -->
+    </style>
+    
 </resources>
