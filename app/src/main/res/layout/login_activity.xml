@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- Napis "Hello" z marginesem u góry -->
+
+    <ImageView
+        android:layout_width="416dp"
+        android:layout_height="92dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/yellow_blob"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="-6dp" />
+
+    <TextView
+        android:id="@+id/helloText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello"
+        android:textSize="48sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="100dp"/> <!-- Fixed margin -->
+
+    <!-- Napis "Sign in to your account" z odstępem od "Hello" -->
+    <TextView
+        android:id="@+id/signInText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign in to your account"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/helloText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/> <!-- Fixed margin -->
+
+    <!-- Pole Username z odstępem od "Sign in to your account" -->
+    <LinearLayout
+        android:id="@+id/usernameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bg"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/signInText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        android:layout_marginTop="60dp"> <!-- Fixed margin -->
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_person_24"
+            app:tint="#000000" />
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:hint="E-mail"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Pole Password z odstępem od pola Username -->
+    <LinearLayout
+        android:id="@+id/passwordLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bg"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/usernameLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        android:layout_marginTop="25dp"> <!-- Fixed margin -->
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_password_24"
+            app:tint="#000000" />
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:hint="Password"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <!-- Klikalny napis "Forgot your password?" wyrównany do prawej strony ekranu -->
+    <TextView
+        android:id="@+id/forgotPasswordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot your password?"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/passwordLayout"
+        app:layout_constraintEnd_toEndOf="@id/passwordLayout"
+        android:layout_marginTop="15dp" /> <!-- Fixed margin -->
+
+    <!-- Napis "Sign in" oraz przycisk ze strzałką po prawej stronie -->
+    <LinearLayout
+        android:id="@+id/signInLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/forgotPasswordText"
+        app:layout_constraintEnd_toEndOf="@id/forgotPasswordText"
+        android:layout_marginTop="70dp">
+
+        <TextView
+            android:id="@+id/signInButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign in"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Wrapping the arrow in a LinearLayout with a yellow background -->
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_bg"
+            android:padding="4dp"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/signInArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_arrow_right_alt_24"
+                app:tint="#FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="115dp"
+        android:layout_height="275dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/yellow_blob2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="0dp">
+
+        <TextView
+            android:id="@+id/createAccountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Create now!"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:clickable="true" />
+
+        <!-- Wrapping the underline in a LinearLayout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+
+            <View
+                android:id="@+id/underline"
+                android:layout_width="75dp"
+                android:layout_height="1dp"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#000000">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:textColor="#FFFFFF"/>
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:scrollbars="none"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Example buttons -->
+            <Button
+                android:id="@+id/actionGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Action"
+                android:background="@drawable/rounded_bg_black"
+                android:textColor="#FFFFFF"
+                app:backgroundTint="@null"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/adventureGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Adventure"
+                android:background="@drawable/rounded_bg_black"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/rpgGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_bg_black"
+                android:text="RPG"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/FPSGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FPS"
+                android:background="@drawable/rounded_bg_black"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/BRGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_bg_black"
+                android:text="Battle Royale"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/mobaGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MOBA"
+                android:background="@drawable/rounded_bg_black"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
+            <Button
+                android:id="@+id/sportsGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sports"
+                android:background="@drawable/rounded_bg_black"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
+            <Button
+                android:id="@+id/platformerGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Platformer"
+                android:background="@drawable/rounded_bg_black"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
+            <Button
+                android:id="@+id/sandBoxGenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sandbox"
+                android:background="@drawable/rounded_bg_black"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Add more buttons as needed -->
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearch"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2" />
+
+</LinearLayout>

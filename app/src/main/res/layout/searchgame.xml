@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="240dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/gameImageView"
+        android:layout_width="160dp"
+        android:layout_height="160dp" />
+
+    <TextView
+        android:id="@+id/gameTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingTop="8dp" />
+
+    <TextView
+        android:id="@+id/gameRatingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rating: 0.0"
+        android:textSize="14sp"
+        android:paddingTop="4dp" />
+</LinearLayout>
