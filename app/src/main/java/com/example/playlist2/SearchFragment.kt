@@ -5,13 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.playlist2.GameDetails
 import com.example.playlist2.R
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
 class SearchFragment : Fragment() {
@@ -20,8 +24,8 @@ class SearchFragment : Fragment() {
     private lateinit var gameAdapter: GameAdapter
     private var selectedGenre: String? = null
     private var activeButton: Button? = null
-    private var gamesList: List<Game> =
-        emptyList()  // Lista gier, która będzie używana do filtrowania
+    private var gamesList: List<Game> = emptyList()  // Lista gier
+    private var documentList: List<DocumentSnapshot> = emptyList()  // Lista dokumentów z Firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +44,29 @@ class SearchFragment : Fragment() {
         // Pobranie danych z Firestore
         fetchGamesFromFirestore()
 
+        // Ustawienie SearchView
+        val searchView: androidx.appcompat.widget.SearchView = view.findViewById(R.id.searchView)
+        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Przeszukujemy gry po tytule
+                query?.let {
+                    filterGamesBySearch(it)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Przeszukujemy gry na bieżąco
+                newText?.let {
+                    filterGamesBySearch(it)
+                }
+                return true
+            }
+        })
+
         return view
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -91,6 +116,18 @@ class SearchFragment : Fragment() {
         }
     }
 
+    private fun filterGamesBySearch(query: String) {
+        val filteredGames = if (query.isEmpty()) {
+            gamesList // Pełna lista gier, jeśli pole wyszukiwania jest puste
+        } else {
+            gamesList.filter { it.title.contains(query, ignoreCase = true) }  // Filtrujemy gry po tytule
+        }
+
+        // Zaktualizowanie adaptera z przefiltrowaną listą gier
+        gameAdapter.updateGames(filteredGames)
+    }
+
+
     private fun filterGamesByGenre(genre: String?) {
         val filteredGames = if (genre == null) {
             gamesList // Pełna lista gier
@@ -98,7 +135,8 @@ class SearchFragment : Fragment() {
             gamesList.filter { it.genre == genre }  // Filtrujemy gry po gatunku
         }
 
-        gameAdapter.updateGames(filteredGames)  // Uaktualniamy adapter
+        // Zaktualizowanie adaptera z przefiltrowaną listą gier
+        gameAdapter.updateGames(filteredGames)
     }
 
     private fun fetchGamesFromFirestore() {
@@ -106,12 +144,16 @@ class SearchFragment : Fragment() {
             .get()
             .addOnSuccessListener { documents ->
                 val gameList = mutableListOf<Game>()
+                val docList = mutableListOf<DocumentSnapshot>()
                 for (document in documents) {
+                    // Tworzymy obiekt gry
                     val game = document.toObject(Game::class.java)
                     gameList.add(game)
+                    docList.add(document)  // Przechowujemy dokumenty
                 }
                 gamesList = gameList  // Przypisujemy pobraną listę gier
-                gameAdapter.setGames(gameList)  // Ustawiamy listę gier w adapterze
+                documentList = docList  // Przypisujemy dokumenty
+                gameAdapter.setGames(gameList, docList)  // Ustawiamy listę gier i dokumentów w adapterze
             }
             .addOnFailureListener { exception ->
                 // Obsługa błędu
@@ -123,14 +165,17 @@ class SearchFragment : Fragment() {
         val title: String = "",
         val rating: Double = 0.0,
         val genre: String = "",  // Dodanie gatunku do modelu
-        val description: String = ""  // Dodanie opisu do modelu
+        val description: String = "",  // Dodanie opisu do modelu
+        var id: String = "",
     )
 
     inner class GameAdapter : RecyclerView.Adapter<GameAdapter.GameViewHolder>() {
         private var games = listOf<Game>()
+        private var documents = listOf<DocumentSnapshot>()  // Przechowujemy dokumenty Firestore
 
-        fun setGames(games: List<Game>) {
+        fun setGames(games: List<Game>, documents: List<DocumentSnapshot>) {
             this.games = games
+            this.documents = documents  // Przechowujemy dokumenty
             notifyDataSetChanged()  // Odświeżamy adapter
         }
 
@@ -147,12 +192,19 @@ class SearchFragment : Fragment() {
 
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
             val game = games[position]
+            val document = documents[position]  // Pobieramy dokument z Firestore
+            val gameId = document.id  // ID dokumentu Firestore
+
             holder.bind(game)
 
-            // Obsługa kliknięcia na element listy
             holder.itemView.setOnClickListener {
-                // Wywołanie funkcji do pokazania okna dialogowego z informacjami o grze
-                showGameDetailsDialog(holder.itemView.context, game)
+                // Przekazujemy ID dokumentu do fragmentu szczegółów gry
+                val fragment = GameDetails.newInstance(gameId)
+                // Przejście do fragmentu szczegółów gry
+                (it.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
             }
         }
 
@@ -173,35 +225,5 @@ class SearchFragment : Fragment() {
                 gameRatingTextView.text = "Rating: ${game.rating}"
             }
         }
-
-        private fun showGameDetailsDialog(context: Context, game: Game) {
-            val builder = android.app.AlertDialog.Builder(context, R.style.CustomDialogStyle)
-
-            // Inicjalizacja widoku dialogu
-            val view = LayoutInflater.from(context).inflate(R.layout.dialog_game_details, null)
-            builder.setView(view)
-
-            // Pobranie elementów z widoku dialogu
-            val gameTitleTextView = view.findViewById<TextView>(R.id.gameTitleTextView)
-            val gameDescriptionTextView = view.findViewById<TextView>(R.id.gameDescriptionTextView)
-            val gameRatingTextView = view.findViewById<TextView>(R.id.gameRatingTextView)
-            val gameImageView = view.findViewById<ImageView>(R.id.gameImageView)
-
-            // Ustawienie wartości w widoku
-            gameTitleTextView.text = game.title
-            gameDescriptionTextView.text = game.description
-            gameRatingTextView.text = "Rating: ${game.rating}"
-
-            Glide.with(context)
-                .load(game.coverImageUrl)
-                .into(gameImageView)
-
-
-            // Wyświetlenie dialogu
-            val dialog = builder.create()
-            dialog.show()
-
-        }
     }
-    }
-
+}

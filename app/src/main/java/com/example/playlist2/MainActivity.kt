@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         // Funkcja dodająca dane
        //addGamesToFirestore()
+        //FirestoreStatusUpdater.addStatusToGames()
 
         // Inicjalizacja BottomNavigationView
 

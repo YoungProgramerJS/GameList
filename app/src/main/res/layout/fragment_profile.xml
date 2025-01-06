@@ -191,7 +191,7 @@
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Opis"
+                android:text="Przykładowy opis, mozna go edytowac wchodzac w tryb edycji poprzez klikniecie przycisku Edit w prawym gornym rogu"
                 android:textSize="16sp"
                 android:maxLines="12"
                 android:ellipsize="end"
@@ -240,35 +240,89 @@
             android:paddingBottom="20dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <!-- Placeholder Image 1 -->
+            <FrameLayout
+                android:id="@+id/top9Item1"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_rowSpan="1"
                 android:layout_columnSpan="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                android:src="@drawable/profilepic"
-                android:scaleType="centerCrop"/>
+                android:background="@drawable/rounded_bg_black">
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_rowSpan="1"
-                android:layout_columnSpan="1"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                android:src="@drawable/profilepic"
-                android:scaleType="centerCrop"/>
+                <ImageView
+                    android:id="@+id/top9Image1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
 
-            <ImageView
+                <TextView
+                    android:id="@+id/top9Placeholder1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Select Game"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+            </FrameLayout>
+
+            <!-- Placeholder Image 2 -->
+            <FrameLayout
+                android:id="@+id/top9Item2"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_rowSpan="1"
                 android:layout_columnSpan="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                android:src="@drawable/profilepic"
-                android:scaleType="centerCrop"/>
+                android:background="@drawable/rounded_bg_black">
+
+                <ImageView
+                    android:id="@+id/top9Image2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/top9Placeholder2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Select Game"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+            </FrameLayout>
+
+            <!-- Placeholder Image 3 -->
+            <FrameLayout
+                android:id="@+id/top9Item3"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_rowSpan="1"
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_bg_black">
+
+                <ImageView
+                    android:id="@+id/top9Image3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/top9Placeholder3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Select Game"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+            </FrameLayout>
 
             <ImageView
                 android:layout_width="0dp"

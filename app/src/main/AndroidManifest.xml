@@ -33,6 +33,10 @@
         <activity
             android:name=".ProfileFragment"
             android:exported="true" />
+        <activity
+            android:name=".GameDetails"
+            android:exported="true" />
+
 
     </application>
 
