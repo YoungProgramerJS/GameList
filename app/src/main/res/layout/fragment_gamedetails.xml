@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/gameCover"
+                android:layout_width="150dp"
+                android:layout_height="230dp"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Tytuł gry i ikona zapisu w układzie poziomym -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/gameTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFF00"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_weight="1" /> <!-- Tytuł gry zajmuje całą przestrzeń po lewej -->
+
+                    <!-- Ikona zapisu -->
+                    <ImageButton
+                        android:id="@+id/saveButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:contentDescription="Save game"
+                        android:src="@drawable/baseline_bookmark_border_24"
+                        app:tint="@color/yellow" />
+                </LinearLayout>
+
+                <!-- Publisher (wydawca) poniżej tytułu -->
+                <TextView
+                    android:id="@+id/publisher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFF00"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="16dp">
+
+            <ImageButton
+                android:id="@+id/cancelButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="Cancel"
+                android:src="@drawable/baseline_close_24"
+                app:tint="@color/yellow" />
+
+            <!-- RatingBar edytowalny -->
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:isIndicator="false"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:theme="@style/Widget.AppCompat.RatingBar.Small"
+                android:progressTint="@color/yellow"
+                android:secondaryProgressTint="@color/yellow"
+                android:progressBackgroundTint="@color/gray" />
+
+            <!-- RatingBar tylko do odczytu (bez suwaka) -->
+            <RatingBar
+                android:id="@+id/ratingBarReadOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:isIndicator="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:theme="@style/Widget.AppCompat.RatingBar.Small"
+                android:progressTint="@color/yellow"
+                android:secondaryProgressTint="@color/yellow"
+                android:progressBackgroundTint="@color/gray"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/confirmButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="Confirm"
+                android:src="@drawable/baseline_check_24"
+                app:tint="@color/yellow" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/gameDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFF00"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="4dp"
+            android:text="Opis gry pojawi się tutaj." />
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFF00"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:text="Gatunek: RPG" />
+
+        <TextView
+            android:id="@+id/releaseDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFF00"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:text="Data premiery: 2024-01-01" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/statusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status:"
+                android:textColor="#FFFF00"
+                android:textSize="18sp"
+                android:layout_alignParentStart="true"/>
+            <Spinner
+                android:id="@+id/statusSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:backgroundTint="@color/yellow"
+                android:textColor="#FFFF00"
+                android:layout_marginStart="5dp"
+                android:entries="@array/status_options" />
+        </LinearLayout>
+
+        <!-- Nowe pole tekstowe do wprowadzania komentarza -->
+        <EditText
+            android:id="@+id/commentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Wpisz komentarz"
+            android:textColor="#FFFF00"
+            android:background="@android:drawable/edit_text"
+            android:layout_marginTop="16dp"
+            android:padding="10dp"
+            android:gravity="top|start"
+            android:lines="4"
+            android:maxLines="5"
+            android:scrollbars="vertical" />
+
+        <!-- Przycisk do zamieszczania komentarza -->
+        <Button
+            android:id="@+id/postCommentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zamieść komentarz"
+            android:textColor="#FFFF00"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_bg" />
+
+        <!-- Sekcja na listę komentarzy -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

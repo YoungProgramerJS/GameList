@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -40,9 +41,9 @@ class HomeFragment : Fragment() {
         newGamesRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         // Pobierz dane z Firestore dla Top 10
-        getTopTenGames { documents ->
+        getTopTenGames { games ->
             // Przekazujemy funkcję onItemClick do adaptera
-            topTenAdapter = GameAdapter(documents) { gameId ->
+            topTenAdapter = GameAdapter(games) { gameId ->
                 // Logika przejścia do fragmentu szczegółów gry
                 val fragment = GameDetails.newInstance(gameId)
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -54,9 +55,9 @@ class HomeFragment : Fragment() {
         }
 
         // Pobierz dane z Firestore dla New Games
-        getNewGames { documents ->
+        getNewGames { games ->
             // Przekazujemy funkcję onItemClick do adaptera
-            newGamesAdapter = GameAdapter(documents) { gameId ->
+            newGamesAdapter = GameAdapter(games) { gameId ->
                 // Logika przejścia do fragmentu szczegółów gry
                 val fragment = GameDetails.newInstance(gameId)
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -68,9 +69,41 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // Funkcja do pobierania gier Top 10 z Firestore
+    private fun getTopTenGames(callback: (List<Game>) -> Unit) {
+        FirebaseFirestore.getInstance().collection("games")
+            .orderBy("rating", com.google.firebase.firestore.Query.Direction.DESCENDING) // Sortowanie malejąco według ratingu
+            .limit(10)
+            .get()
+            .addOnSuccessListener { documents ->
+                val games = mutableListOf<Game>()
+                for (document in documents) {
+                    val game = document.toObject(Game::class.java)
+                    games.add(game)
+                }
+                callback(games)
+            }
+    }
+
+    private fun getNewGames(callback: (List<Game>) -> Unit) {
+        FirebaseFirestore.getInstance().collection("games")
+            .orderBy("releaseDate", com.google.firebase.firestore.Query.Direction.DESCENDING) // Sortowanie malejąco według daty wydania
+            .limit(10)
+            .get()
+            .addOnSuccessListener { documents ->
+                val games = mutableListOf<Game>()
+                for (document in documents) {
+                    val game = document.toObject(Game::class.java)
+                    games.add(game)
+                }
+                callback(games)
+            }
+    }
+
+
     // Adapter wewnątrz HomeFragment
     class GameAdapter(
-        private val documents: List<QueryDocumentSnapshot>,
+        private val games: List<Game>,
         private val onItemClick: (String) -> Unit
     ) : RecyclerView.Adapter<GameAdapter.GameViewHolder>() {
 
@@ -80,18 +113,14 @@ class HomeFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-            val document = documents[position] // Pobieramy dokument
-            val gameId = document.id  // ID dokumentu
-
-            // Zaktualizuj dane z dokumentu Firestore
-            val game = document.toObject(Game::class.java)
+            val game = games[position] // Pobieramy obiekt gry
 
             holder.bind(game)
 
             // Obsługa kliknięcia na element
             holder.itemView.setOnClickListener {
-                // Przekazujemy ID dokumentu do fragmentu szczegółów gry
-                val fragment = GameDetails.newInstance(gameId)
+                // Przekazujemy ID gry do fragmentu szczegółów
+                val fragment = GameDetails.newInstance(game.title)
 
                 // Przejście do fragmentu szczegółów gry
                 (it.context as AppCompatActivity).supportFragmentManager.beginTransaction()
@@ -101,22 +130,20 @@ class HomeFragment : Fragment() {
             }
         }
 
-        override fun getItemCount(): Int = documents.size
+        override fun getItemCount(): Int = games.size
 
         inner class GameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun bind(game: Game?) {
+            fun bind(game: Game) {
                 val title = itemView.findViewById<TextView>(R.id.gameTitle)
                 val coverImage = itemView.findViewById<ImageView>(R.id.gameImage)
                 val ratingBar = itemView.findViewById<RatingBar>(R.id.gameRating)
 
-                game?.let {
-                    title.text = it.title
-                    ratingBar.rating = it.rating.toFloat()
+                title.text = game.title
+                ratingBar.rating = game.rating.toFloat()
 
-                    Glide.with(itemView.context)
-                        .load(it.coverImageUrl)
-                        .into(coverImage)
-                }
+                Glide.with(itemView.context)
+                    .load(game.coverImageUrl)
+                    .into(coverImage)
             }
         }
     }
@@ -125,6 +152,7 @@ class HomeFragment : Fragment() {
     data class Game(
         val title: String = "",
         val coverImageUrl: String = "",
-        val rating: Double = 0.0
+        val rating: Double = 0.0,
+        val releaseDate: String = ""
     )
 }
