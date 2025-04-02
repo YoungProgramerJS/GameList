@@ -177,7 +177,6 @@ class GameDetails : Fragment() {
                         }
                     }
 
-                    // Ładowanie komentarzy
                     loadComments(gameId)
                 }
             }
@@ -194,7 +193,7 @@ class GameDetails : Fragment() {
     // Nowa funkcja loadComments
     private fun loadComments(gameId: String) {
         db.collection("games").document(gameId).collection("comments")
-            .orderBy("timestamp")  // Nadal sortujemy po timestampie, ale go nie wyświetlamy
+            .orderBy("timestamp")
             .get()
             .addOnSuccessListener { commentsSnapshot ->
                 commentsList.clear()
@@ -223,7 +222,6 @@ class GameDetails : Fragment() {
         commentsRef.add(comment)
             .addOnSuccessListener {
                 Log.d("GameDetails", "Komentarz dodany pomyślnie")
-                // Po dodaniu komentarza, ładujemy je ponownie
                 loadComments(gameId)
             }
             .addOnFailureListener { e ->

@@ -18,10 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var topTenRecyclerView: RecyclerView
-    private lateinit var latestRecyclerView: RecyclerView
-    private lateinit var topTenAdapter: GameAdapter
-    private lateinit var latestAdapter: GameAdapter
 
     private lateinit var bottomNavigationView: BottomNavigationView
 

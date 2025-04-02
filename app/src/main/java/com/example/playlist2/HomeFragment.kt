@@ -42,9 +42,7 @@ class HomeFragment : Fragment() {
 
         // Pobierz dane z Firestore dla Top 10
         getTopTenGames { games ->
-            // Przekazujemy funkcję onItemClick do adaptera
             topTenAdapter = GameAdapter(games) { gameId ->
-                // Logika przejścia do fragmentu szczegółów gry
                 val fragment = GameDetails.newInstance(gameId)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment)
@@ -56,9 +54,7 @@ class HomeFragment : Fragment() {
 
         // Pobierz dane z Firestore dla New Games
         getNewGames { games ->
-            // Przekazujemy funkcję onItemClick do adaptera
             newGamesAdapter = GameAdapter(games) { gameId ->
-                // Logika przejścia do fragmentu szczegółów gry
                 val fragment = GameDetails.newInstance(gameId)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment)
@@ -72,7 +68,7 @@ class HomeFragment : Fragment() {
     // Funkcja do pobierania gier Top 10 z Firestore
     private fun getTopTenGames(callback: (List<Game>) -> Unit) {
         FirebaseFirestore.getInstance().collection("games")
-            .orderBy("rating", com.google.firebase.firestore.Query.Direction.DESCENDING) // Sortowanie malejąco według ratingu
+            .orderBy("rating", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .limit(10)
             .get()
             .addOnSuccessListener { documents ->
